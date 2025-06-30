@@ -6,8 +6,8 @@ embedding_model:
   model_name: "models/text-embedding-004"
 
 retriever:
-  top_k: 3
+  top_k: 5
 
 llm:
   provider: "google"
-  model_name: "gemini-2.5-pro" 
+  model_name: "llama3-70b-8192" 
