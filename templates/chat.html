@@ -2,88 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flipkart Product Assistant</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='style.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductReview Chat</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class="container-fluid h-100">
-        <div class="row justify-content-center h-100">
-            <div class="col-md-8 col-xl-6 chat">
-                <div class="card">
-                    <div class="card-header msg_head">
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" class="rounded-circle user_img">
-                                <span class="online_icon"></span>
-                            </div>
-                            <div class="user_info">
-                                <span>Flipkart Product Assistant</span>
-                                <p>Ask me anything about products!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="messageFormeight" class="card-body msg_card_body"></div>
-                    <div class="card-footer">
-                        <form id="messageArea" class="input-group">
-                            <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required>
-                            <div class="input-group-append">
-                                <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </form>
-                    </div>
+    <!-- Website Header -->
+    <header class="website-header">
+        <div class="container">
+            <div class="logo-nav">
+                <div class="logo">
+                    <i class="fas fa-comments"></i>
+                    <span>ProductReview Chat</span>
                 </div>
             </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get Instant Product Reviews</h1>
+                <p>Our AI assistant helps you find honest, unbiased product reviews in seconds</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section class="chat-section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="chat-intro">
+                Our AI-powered chat assistant can answer all your product questions. 
+                Get detailed reviews, comparisons, and recommendations instantly.
+            </p>
+            
+            <div class="chat-features">
+                <div class="feature-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI-Powered</h3>
+                    <p>Our assistant analyzes thousands of reviews to give you the most accurate information.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Answers</h3>
+                    <p>Get responses in seconds without having to search through multiple websites.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Unbiased Reviews</h3>
+                    <p>We aggregate reviews from multiple sources to give you balanced perspectives.</p>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="startChatBtn" style="padding: 15px 30px; font-size: 18px;">
+                <i class="fas fa-comment-dots"></i> Start Chatting Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Floating Chat Button -->
+    <button id="chatButton" class="floating-btn">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Chat Container (Initially Hidden) -->
+    <div id="chatContainer" class="chat-container">
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="avatar">
+                    <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" 
+                         alt="Bot Avatar">
+                    <span class="online-indicator"></span>
+                </div>
+                <div class="header-text">
+                    <h3>Product Review Assistant</h3>
+                    <p>Ask me about any product!</p>
+                </div>
+            </div>
+            <button id="closeChat" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-body" id="messageArea">
+            <!-- Welcome Message -->
+            <div class="message received">
+                <div class="avatar">
+                    <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" 
+                         alt="Bot Avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-text">Hi there! I can help you find product reviews and comparisons. What product would you like to know about today?</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-footer">
+            <form id="messageForm" class="message-form">
+                <input type="text" 
+                       id="textInput" 
+                       name="msg" 
+                       placeholder="Ask about a product..." 
+                       autocomplete="off" 
+                       class="message-input" 
+                       required
+                       aria-label="Type your message">
+                <button type="submit" 
+                        id="sendBtn" 
+                        class="send-btn"
+                        aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
     </div>
 
     <script>
     $(document).ready(function() {
-        $("#messageArea").on("submit", function(event) {
-            const date = new Date();
-            const hour = date.getHours();
-            const minute = date.getMinutes();
-            const str_time = `${hour}:${minute}`;
-            var rawText = $("#text").val();
+        // Toggle chat visibility
+        $("#chatButton, #startChatBtn").click(function() {
+            $("#chatContainer").addClass("active");
+            $("#textInput").focus();
+        });
+        
+        $("#closeChat").click(function() {
+            $("#chatContainer").removeClass("active");
+        });
 
+        // Auto-focus input on load
+        $("#textInput").focus();
+        
+        // Handle message submission
+        $("#messageForm").on("submit", function(event) {
+            event.preventDefault();
+            
+            var rawText = $("#textInput").val().trim();
+            
+            if (!rawText) return;
+            
+            const date = new Date();
+            const hour = date.getHours().toString().padStart(2, '0');
+            const minute = date.getMinutes().toString().padStart(2, '0');
+            const str_time = `${hour}:${minute}`;
+            
+            // Add user message
             var userHtml = `
-                <div class="d-flex justify-content-end mb-4">
-                    <div class="msg_cotainer_send">${rawText}
-                        <span class="msg_time_send">${str_time}</span>
-                    </div>
-                    <div class="img_cont_msg">
-                        <img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg">
+                <div class="message sent">
+                    <div class="message-content">
+                        <div class="message-text">${rawText}</div>
+                        <div class="message-time">${str_time}</div>
                     </div>
                 </div>`;
             
-            $("#text").val("");
-            $("#messageFormeight").append(userHtml);
-
+            $("#textInput").val("");
+            $("#messageArea").append(userHtml);
+            
+            // Add typing indicator
+            var typingHtml = `
+                <div class="message received">
+                    <div class="avatar">
+                        <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" 
+                             alt="Bot Avatar">
+                    </div>
+                    <div class="message-content">
+                        <div class="typing-indicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>`;
+            
+            $("#messageArea").append(typingHtml);
+            scrollToBottom();
+            
+            // Get bot response
             $.ajax({
                 data: { msg: rawText },
                 type: "POST",
                 url: "/get",
             }).done(function(data) {
+                // Remove typing indicator
+                $(".typing-indicator").parent().parent().remove();
+                
+                // Add bot response
                 var botHtml = `
-                    <div class="d-flex justify-content-start mb-4">
-                        <div class="img_cont_msg">
-                            <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" class="rounded-circle user_img_msg">
+                    <div class="message received">
+                        <div class="avatar">
+                            <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" 
+                                 alt="Bot Avatar">
                         </div>
-                        <div class="msg_cotainer">${data}
-                            <span class="msg_time">${str_time}</span>
+                        <div class="message-content">
+                            <div class="message-text">${data}</div>
+                            <div class="message-time">${str_time}</div>
                         </div>
                     </div>`;
-                $("#messageFormeight").append($.parseHTML(botHtml));
-                $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+                
+                $("#messageArea").append(botHtml);
+                scrollToBottom();
+            }).fail(function() {
+                // Remove typing indicator on error
+                $(".typing-indicator").parent().parent().remove();
+                
+                // Show error message
+                var errorHtml = `
+                    <div class="message received">
+                        <div class="avatar">
+                            <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" 
+                                 alt="Bot Avatar">
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">Sorry, I'm having trouble connecting. Please try again later.</div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>`;
+                
+                $("#messageArea").append(errorHtml);
+                scrollToBottom();
             });
-
-            event.preventDefault();
+        });
+        
+        function scrollToBottom() {
+            $("#messageArea").scrollTop($("#messageArea")[0].scrollHeight);
+        }
+        
+        // Send message on Enter key (without Shift)
+        $("#textInput").keypress(function(e) {
+            if (e.which === 13 && !e.shiftKey) {
+                e.preventDefault();
+                $("#messageForm").submit();
+            }
         });
     });
     </script>
-
 </body>
 </html>
