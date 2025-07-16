@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -206,7 +208,7 @@
                                  alt="Bot Avatar">
                         </div>
                         <div class="message-content">
-                            <div class="message-text">${data}</div>
+                            <div class="message-text">${marked.parse(data)}</div>
                             <div class="message-time">${str_time}</div>
                         </div>
                     </div>`;
