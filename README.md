@@ -1,6 +1,6 @@
 ''' ''uvicorn main:app --reload --port 8001''
 '''python -m streamlit run scrapper_ingestion_ui.py'''
-``` all the best```
+
 
 # Flipkart Product Review Chatbot (RAG)
 
@@ -65,15 +65,15 @@ python -m streamlit run scrapper_ingestion_ui.py
 
 ## 🗨️ Example Queries
 
-“Is the camera of this phone good in low light?”
+ “What are customers saying about the battery life of this phone?”
 
-“How is the battery life of this laptop?”
+ “Do reviews mention heating issues for this laptop?”
 
-“Are there heating issues during gaming?”
+“Are customers satisfied with the camera quality?”
 
-“How is the outdoor display quality?”
-
-![Alt Text](image_path_or_url)
+ “What do people like the most about this phone?”
+ 
+![Alt Text](https://github.com/ShraddhaAlhat/Product_Review_Chatbot-rag-/blob/main/Screenshot%202025-07-22%20094641.png)
 
 
 ## 🤝 Contributing
